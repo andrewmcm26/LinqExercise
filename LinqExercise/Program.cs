@@ -44,8 +44,8 @@ namespace LinqExercise
 
             Console.WriteLine();
             //Order numbers in any order (acsending or desc) but only print 4 of them **foreach loop only!**
-            var newNumbers = numbers.OrderBy(item => item).Skip(numbers.Count()-4);
-            Console.WriteLine("Printing last 4 digits:");
+            var newNumbers = numbers.OrderBy(item => item).Take(4);
+            Console.WriteLine("Printing first 4 digits:");
             foreach (var i in newNumbers)
                 Console.WriteLine(i);
 
@@ -63,8 +63,8 @@ namespace LinqExercise
             Console.WriteLine();
             //Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S.
             //Order this in acesnding order by FirstName.
-            var employeesCOrS = employees.Where(item => item.FirstName[0] == 'C'
-            || item.FirstName[0] == 'S').OrderBy(item => item.FirstName);
+            var employeesCOrS = employees.Where(item => item.FirstName.ToLower().StartsWith('c')
+            || item.FirstName.ToLower().StartsWith('s')).OrderBy(item => item.FirstName);
             Console.WriteLine("Writing Employees with first name starting with" +
                 " 'C' or 'S':");
             foreach (var i in employeesCOrS)
@@ -73,8 +73,8 @@ namespace LinqExercise
             Console.WriteLine();
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
-            var employeesOver26 = employees.Where(item => item.Age > 26)
-                .OrderBy(item => item.FirstName).OrderBy(item => item.Age);
+            var employeesOver26 = employees.Where(item => item.Age > 26).OrderBy(item => item.Age)
+                .ThenBy(item => item.FirstName);
             Console.WriteLine("Employees over 26:");
             foreach (var i in employeesOver26)
                 Console.WriteLine($"{i.Age} {i.FullName} ");
